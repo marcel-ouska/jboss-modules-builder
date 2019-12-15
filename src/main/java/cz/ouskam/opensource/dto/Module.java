@@ -1,4 +1,4 @@
-package com.jboss.builder.dto;
+package cz.ouskam.opensource.dto;
 
 import java.util.ArrayList;
 import java.util.List;

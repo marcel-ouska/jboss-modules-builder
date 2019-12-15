@@ -1,6 +1,6 @@
-package com.jboss.builder;
+package cz.ouskam.opensource;
 
-import com.jboss.builder.dto.ModulesWrapper;
+import cz.ouskam.opensource.dto.ModulesWrapper;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;

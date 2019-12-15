@@ -1,4 +1,4 @@
-package com.jboss.builder.dto;
+package cz.ouskam.opensource.dto;
 
 public class Dependency {
 

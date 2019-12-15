@@ -1,8 +1,8 @@
-package com.jboss.builder;
+package cz.ouskam.opensource;
 
-import com.jboss.builder.dto.Layer;
-import com.jboss.builder.dto.Module;
-import com.jboss.builder.dto.ModulesWrapper;
+import cz.ouskam.opensource.dto.Layer;
+import cz.ouskam.opensource.dto.Module;
+import cz.ouskam.opensource.dto.ModulesWrapper;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -21,7 +21,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Map;
 import java.util.Properties;
 
-import static com.jboss.builder.ModulesParser.parseModule;
+import static cz.ouskam.opensource.ModulesParser.parseModule;
 
 @Mojo( name = "build", defaultPhase = LifecyclePhase.GENERATE_RESOURCES )
 public class BuilderMojo extends AbstractMojo {
