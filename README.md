@@ -101,3 +101,14 @@ After build creates structure in your target/modules-build folder:
                                     module.xml
                                     postgresql-9.1-901-1.jdbc4.jar
 ```
+
+### Configuration
+
+| Property | Default Value | Mandatory | Description |
+|----------|---------------|-----------|-------------|
+| outputDirectory | ${project.build.directory}/modules-build | :x: | Output directory where the result will be stored |
+| workDirectory | ${project.build.directory}/work | :x: | Output directory where the temporary files will be stored |
+| mvnExecutable | - | :x: | Path to maven executable in case there is no bindings to "mvn" or "mvn.cmd" commands |
+| layersConfFile | - | :heavy_check_mark: | Path to layers.conf file that will be copied into the results |
+| modulesYamlFile | - | :heavy_check_mark: | Path to yaml configuration file that describes how the modules should be built |
+| parameters | - | :x: | A map of custom parameters that are later usable in the YAML file |

@@ -32,11 +32,11 @@ public class BuilderMojo extends AbstractMojo {
     @Parameter( defaultValue = "${project.build.directory}/modules-build", property = "outputDirectory" )
     private File outputDirectory;
 
-    @Parameter( property = "mvnExecutable" )
-    private File mvnExecutable;
-
     @Parameter( defaultValue = "${project.build.directory}/work", property = "workDirectory" )
     private File workDirectory;
+
+    @Parameter( property = "mvnExecutable" )
+    private File mvnExecutable;
 
     @Parameter(property = "layersConfFile", required = true )
     private File layersConfFile;
