@@ -3,6 +3,7 @@ package cz.ouskam.opensource;
 import cz.ouskam.opensource.dto.Layer;
 import cz.ouskam.opensource.dto.Module;
 import cz.ouskam.opensource.dto.ModulesWrapper;
+import org.apache.commons.lang.SystemUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -30,6 +31,9 @@ public class BuilderMojo extends AbstractMojo {
      */
     @Parameter( defaultValue = "${project.build.directory}/modules-build", property = "outputDirectory" )
     private File outputDirectory;
+
+    @Parameter( property = "mvnExecutable" )
+    private File mvnExecutable;
 
     @Parameter( defaultValue = "${project.build.directory}/work", property = "workDirectory" )
     private File workDirectory;
@@ -116,9 +120,17 @@ public class BuilderMojo extends AbstractMojo {
                 });
     }
 
-    public static void buildPom(String pomFilePath) throws IOException {
+    public void buildPom(String pomFilePath) throws IOException {
+        String mvnCommand = "mvn";
+
+        if (mvnExecutable != null && mvnExecutable.exists()) {
+            mvnCommand = mvnExecutable.getAbsolutePath();
+        } else if (SystemUtils.IS_OS_WINDOWS) {
+            mvnCommand = "mvn.cmd";
+        }
+
         ProcessBuilder builder = new ProcessBuilder(
-                "mvn", "clean", "install", "-f", pomFilePath);
+                mvnCommand, "clean", "install", "-f", pomFilePath);
         builder.redirectErrorStream(true);
         Process p = builder.start();
         BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
