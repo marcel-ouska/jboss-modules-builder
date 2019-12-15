@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module name="${module.name}" xmlns="urn:jboss:module:1.3">
+    <resources>
+    #foreach( ${artifact} in ${artifacts} )
+        <resource-root path="${artifact.artifactId}-${artifact.version}.${artifact.packaging}" />
+    #end
+    </resources>
+
+    <dependencies>
+        #foreach( ${dependency} in ${dependencies} )
+            <module name="${dependency.name}" />
+        #end
+    </dependencies>
+
+</module>
