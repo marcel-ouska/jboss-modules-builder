@@ -111,4 +111,5 @@ After build creates structure in your target/modules-build folder:
 | mvnExecutable | [For windows - `mvn.cmd`, for others - `mvn`] | :x: | Path to maven executable in case there is no bindings to "mvn" or "mvn.cmd" commands |
 | layersConfFile | - | :heavy_check_mark: | Path to layers.conf file that will be copied into the results |
 | modulesYamlFile | - | :heavy_check_mark: | Path to yaml configuration file that describes how the modules should be built |
+| generateLayersConf | true | :x: | If `layers.conf` will be generated |
 | parameters | - | :x: | A map of custom parameters that are later usable in the YAML file |

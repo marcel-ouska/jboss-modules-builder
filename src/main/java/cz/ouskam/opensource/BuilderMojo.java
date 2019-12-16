@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Map;
 
 import static cz.ouskam.opensource.ModulesParser.parseModule;
@@ -29,6 +30,9 @@ public class BuilderMojo extends AbstractMojo {
 
     @Parameter( property = "mvnExecutable" )
     private File mvnExecutable;
+
+    @Parameter( defaultValue = "true", property = "generateLayersConf" )
+    private boolean generateLayersConf;
 
     @Parameter(property = "modulesYamlFile", required = true )
     private File modulesYamlFile;
@@ -68,14 +72,20 @@ public class BuilderMojo extends AbstractMojo {
             }
         }
 
-        VelocityContext context = new VelocityContext();
-        context.put("layers", wrapper.layers);
-        BuilderUtils.buildTemplate("templates/layers.template.vm", context, outputDirectory.getAbsolutePath() + "/jboss/modules/layers.conf");
+        if (generateLayersConf) {
+            generateLayersConf(wrapper.layers);
+        }
 
         BuilderUtils.copyDir(modulesDirectory.toPath(), new File(outputDirectory.getAbsolutePath() + "/jboss/modules").toPath());
     }
 
-    public void buildPom(String pomFilePath) throws IOException {
+    private void generateLayersConf(List<Layer> layers) throws IOException {
+        VelocityContext context = new VelocityContext();
+        context.put("layers", layers);
+        BuilderUtils.buildTemplate("templates/layers.template.vm", context, outputDirectory.getAbsolutePath() + "/jboss/modules/layers.conf");
+    }
+
+    private void buildPom(String pomFilePath) throws IOException {
         String mvnCommand = "mvn";
 
         if (mvnExecutable != null && mvnExecutable.exists()) {
