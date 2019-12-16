@@ -10,6 +10,7 @@ import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Properties;
 
 public class BuilderUtils {
@@ -56,12 +57,20 @@ public class BuilderUtils {
                 });
     }
 
-    public static boolean mkDirs(String path) throws IOException {
+    public static boolean mkDirs(String path) {
         File file = new File(path);
         if (file.getName().contains(".")) {
             return file.getParentFile().mkdirs();
         } else {
             return file.mkdirs();
         }
+    }
+
+    public static boolean isEmpty(String string) {
+        return string == null || string.isEmpty();
+    }
+
+    public static boolean isEmpty(Collection collection) {
+        return collection == null || collection.isEmpty();
     }
 }

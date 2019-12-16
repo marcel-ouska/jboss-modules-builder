@@ -24,7 +24,7 @@ public class ModulesParser {
 
         Queue<InstanceFieldPair> fieldsToResolve = new LinkedList<>();
         fieldsToResolve.addAll(
-                Arrays.asList(wrapper.getClass().getDeclaredFields())
+                Arrays.asList(wrapper.getClass().getFields())
                         .stream()
                         .map(obj -> new InstanceFieldPair(wrapper, obj))
                         .collect(Collectors.toList())
@@ -45,7 +45,7 @@ public class ModulesParser {
                 Collection collection = (Collection) value;
                 for (Object item: collection) {
                     fieldsToResolve.addAll(
-                            Arrays.asList(item.getClass().getDeclaredFields())
+                            Arrays.asList(item.getClass().getFields())
                                     .stream()
                                     .map(obj -> new InstanceFieldPair(item, obj))
                                     .collect(Collectors.toList())

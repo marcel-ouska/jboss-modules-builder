@@ -37,6 +37,7 @@ public class BuilderMojo extends AbstractMojo {
     @Parameter(property = "parameters" )
     private Map<String, String> parameters;
 
+    @Override
     public void execute() {
         try {
             runtimeExecute();
@@ -47,7 +48,7 @@ public class BuilderMojo extends AbstractMojo {
 
     public void runtimeExecute() throws IOException, IllegalAccessException {
         ModulesWrapper wrapper = parseModule(modulesYamlFile, parameters);
-
+        Validator.validateData(wrapper);
         File modulesDirectory = new File(workDirectory.getAbsolutePath() + "/modules/");
         File layersDirectory = new File(modulesDirectory.getAbsolutePath() + "/system/layers/");
 
