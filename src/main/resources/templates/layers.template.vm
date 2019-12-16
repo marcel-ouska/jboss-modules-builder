@@ -1,0 +1,2 @@
+#macro(commaIfNeeded $index $size)#set ( $lastone = $size - 1 )#if( $index <= $lastone ),#else#end#end
+layers=#foreach( ${layer} in ${layers} )${layer.name}#commaIfNeeded( $velocityCount $layers.size() )#end
