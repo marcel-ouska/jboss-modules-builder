@@ -12,7 +12,7 @@
     #if( ${module.artifacts})
         <resources>
         #foreach( ${artifact} in ${module.artifacts} )
-            <resource-root path="${artifact.artifactId}-${artifact.version}.${artifact.packaging}"
+            <resource-root path="${artifact.artifactId}-${artifact.version}.#if( ${artifact.packaging})${artifact.packaging}#else jar#end>"
                 #if( ${artifact.attributes})
                     #foreach( ${attribute} in ${artifact.attributes.entrySet()} )
                            ${attribute.key}="${attribute.value}"

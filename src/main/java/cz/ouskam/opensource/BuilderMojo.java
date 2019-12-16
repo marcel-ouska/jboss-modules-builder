@@ -9,7 +9,10 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.velocity.VelocityContext;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.util.List;
 import java.util.Map;
@@ -41,12 +44,12 @@ public class BuilderMojo extends AbstractMojo {
     public void execute() {
         try {
             runtimeExecute();
-        } catch (IOException | IllegalAccessException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
 
-    public void runtimeExecute() throws IOException, IllegalAccessException {
+    public void runtimeExecute() throws Exception {
         ModulesWrapper wrapper = parseModule(modulesYamlFile, parameters);
         Validator.validateData(wrapper);
         File modulesDirectory = new File(workDirectory.getAbsolutePath() + "/modules/");
@@ -62,8 +65,8 @@ public class BuilderMojo extends AbstractMojo {
 
                 String pomFilePath = workDirectory.getAbsolutePath() + "/pom-" + module.getName() + ".xml";
 
-                BuilderUtils.buildTemplate("templates/pom.template.vm", context, pomFilePath);
-                BuilderUtils.buildTemplate("templates/module.template.vm", context,  moduleDirPath + "/module.xml");
+                BuilderUtils.buildTemplate("templates/pom.template.vm", context, pomFilePath, true);
+                BuilderUtils.buildTemplate("templates/module.template.vm", context,  moduleDirPath + "/module.xml", true);
                 buildPom(pomFilePath);
             }
         }
@@ -75,10 +78,10 @@ public class BuilderMojo extends AbstractMojo {
         BuilderUtils.copyDir(modulesDirectory.toPath(), new File(outputDirectory.getAbsolutePath() + "/jboss/modules").toPath());
     }
 
-    private void generateLayersConf(List<Layer> layers) throws IOException {
+    private void generateLayersConf(List<Layer> layers) throws Exception {
         VelocityContext context = new VelocityContext();
         context.put("layers", layers);
-        BuilderUtils.buildTemplate("templates/layers.template.vm", context, outputDirectory.getAbsolutePath() + "/jboss/modules/layers.conf");
+        BuilderUtils.buildTemplate("templates/layers.template.vm", context, outputDirectory.getAbsolutePath() + "/jboss/modules/layers.conf", false);
     }
 
     private void buildPom(String pomFilePath) throws IOException {

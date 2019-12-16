@@ -1,12 +1,22 @@
 package cz.ouskam.opensource;
 
+import com.sun.org.apache.xml.internal.serialize.OutputFormat;
+import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -30,9 +40,30 @@ public class BuilderUtils {
         return resultString.toString();
     }
 
-    public static void buildTemplate(String templatePath, VelocityContext context, String outFile) throws IOException {
+    public static void buildTemplate(String templatePath, VelocityContext context, String outFile, boolean formatXml) throws Exception {
         String template = buildTemplate(templatePath, context);
+
+        if (formatXml) {
+            template = getPrettyXml(template, 2);
+        }
+
         writeToFile(template.getBytes("UTF-8"), outFile);
+    }
+
+    public static String getPrettyXml(String xmlData, int indent) throws Exception {
+        DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+        Document doc = db.parse(new InputSource(new StringReader(xmlData)));
+
+        OutputFormat format = new OutputFormat(doc);
+        format.setIndenting(true);
+        format.setIndent(indent);
+        format.setOmitXMLDeclaration(false);
+        format.setLineWidth(Integer.MAX_VALUE);
+        Writer outxml = new StringWriter();
+        XMLSerializer serializer = new XMLSerializer(outxml, format);
+        serializer.serialize(doc);
+
+        return outxml.toString();
     }
 
 

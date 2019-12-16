@@ -8,6 +8,31 @@ The plugin also downloads all necessary artifacts using maven.
 
 ## Usage
 
+```xml
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>cz.ouskam.opensource</groupId>
+                <artifactId>jboss-modules-builder</artifactId>
+                <version>[current-version]</version>
+                <executions>
+                    <execution>
+                        <id>build-modules</id>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <modulesYamlFile>${project.basedir}/src/main/resources/modules/modules.yaml</modulesYamlFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+```
+
+
 ### Example
 
 `pom file`
@@ -37,7 +62,6 @@ The plugin also downloads all necessary artifacts using maven.
                             <goal>build</goal>
                         </goals>
                         <configuration>
-                            <layersConfFile>${resources.dir}/layers.conf</layersConfFile>
                             <modulesYamlFile>${resources.dir}/modules/modules.yaml</modulesYamlFile>
                             <parameters>
                                 <groupId>${project.groupId}</groupId>
@@ -109,7 +133,6 @@ After build creates structure in your target/modules-build folder:
 | outputDirectory | ${project.build.directory}/modules-build | :x: | Output directory where the result will be stored |
 | workDirectory | ${project.build.directory}/work | :x: | Output directory where the temporary files will be stored |
 | mvnExecutable | [For windows - `mvn.cmd`, for others - `mvn`] | :x: | Path to maven executable in case there is no bindings to "mvn" or "mvn.cmd" commands |
-| layersConfFile | - | :heavy_check_mark: | Path to layers.conf file that will be copied into the results |
 | modulesYamlFile | - | :heavy_check_mark: | Path to yaml configuration file that describes how the modules should be built |
 | generateLayersConf | true | :x: | If `layers.conf` will be generated |
 | parameters | - | :x: | A map of custom parameters that are later usable in the YAML file |
