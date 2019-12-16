@@ -130,9 +130,39 @@ After build creates structure in your target/modules-build folder:
 
 | Property | Default Value | Mandatory | Description |
 |----------|---------------|-----------|-------------|
+| modulesYamlFile | - | :heavy_check_mark: | Path to yaml configuration file that describes how the modules should be built |
 | outputDirectory | ${project.build.directory}/modules-build | :x: | Output directory where the result will be stored |
 | workDirectory | ${project.build.directory}/work | :x: | Output directory where the temporary files will be stored |
 | mvnExecutable | [For windows - `mvn.cmd`, for others - `mvn`] | :x: | Path to maven executable in case there is no bindings to "mvn" or "mvn.cmd" commands |
-| modulesYamlFile | - | :heavy_check_mark: | Path to yaml configuration file that describes how the modules should be built |
 | generateLayersConf | true | :x: | If `layers.conf` will be generated |
 | parameters | - | :x: | A map of custom parameters that are later usable in the YAML file |
+
+### Yaml structure
+
+
+```
+
+layers: [array]
+
+  - name: [string/mandatory]
+    modules: [array]
+
+      - name: [string/mandatory]
+        namespace: [string]
+        artifacts: [array]
+          - groupId: [string/mandatory]
+            artifactId: [string/mandatory]
+            version: [string/mandatory]
+            packaging: [string]
+            classifier: [string]
+            attributes: [object]
+              - key[string]: value[string]
+
+        dependencies: [array]
+          - name: [string/mandatory]
+            attributes: [object]
+              - key[string]: value[string]
+
+        properties: [object]
+          key[string]: value[string]
+```
