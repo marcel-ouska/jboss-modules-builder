@@ -1,21 +1,11 @@
 package cz.ouskam.opensource.dto;
 
+import lombok.Data;
+
+import java.util.Map;
+
+@Data
 public class Dependency {
-
-    public String name;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Dependency{" +
-                "name='" + name + '\'' +
-                '}';
-    }
+    private String name;
+    private Map<String, String> attributes;
 }

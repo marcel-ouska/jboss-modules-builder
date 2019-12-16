@@ -10,10 +10,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.velocity.VelocityContext;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 
@@ -54,17 +51,15 @@ public class BuilderMojo extends AbstractMojo {
         File modulesDirectory = new File(workDirectory.getAbsolutePath() + "/modules/");
         File layersDirectory = new File(modulesDirectory.getAbsolutePath() + "/system/layers/");
 
-        for (Layer layer: wrapper.layers) {
-            for (Module module: layer.modules) {
+        for (Layer layer: wrapper.getLayers()) {
+            for (Module module: layer.getModules()) {
                 VelocityContext context = new VelocityContext();
-                String moduleDirPath = layersDirectory + "/" + layer.name + "/" + module.name.replace(".", "/") + "/main/";
+                String moduleDirPath = layersDirectory + "/" + layer.getName() + "/" + module.getName().replace(".", "/") + "/main/";
 
                 context.put("modulePath", moduleDirPath);
-                context.put("artifacts", module.artifacts);
-                context.put("dependencies", module.dependencies);
                 context.put("module", module);
 
-                String pomFilePath = workDirectory.getAbsolutePath() + "/pom-" + module.name + ".xml";
+                String pomFilePath = workDirectory.getAbsolutePath() + "/pom-" + module.getName() + ".xml";
 
                 BuilderUtils.buildTemplate("templates/pom.template.vm", context, pomFilePath);
                 BuilderUtils.buildTemplate("templates/module.template.vm", context,  moduleDirPath + "/module.xml");
@@ -73,7 +68,7 @@ public class BuilderMojo extends AbstractMojo {
         }
 
         if (generateLayersConf) {
-            generateLayersConf(wrapper.layers);
+            generateLayersConf(wrapper.getLayers());
         }
 
         BuilderUtils.copyDir(modulesDirectory.toPath(), new File(outputDirectory.getAbsolutePath() + "/jboss/modules").toPath());
@@ -96,14 +91,32 @@ public class BuilderMojo extends AbstractMojo {
 
         ProcessBuilder builder = new ProcessBuilder(
                 mvnCommand, "clean", "install", "-f", pomFilePath);
-        builder.redirectErrorStream(true);
         Process p = builder.start();
-        BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
-        String line;
+        BufferedReader infoStreamReader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        boolean throwError = false;
+
         while (true) {
-            line = r.readLine();
+            String line = infoStreamReader.readLine();
             if (line == null) { break; }
-            System.out.println(line);
+            if (line.contains("BUILD FAILURE")) {
+                System.err.println(line);
+                throwError = true;
+            } else {
+                System.out.println(line);
+            }
+        }
+
+
+        BufferedReader errorStreamReader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+        while (true) {
+            String line = errorStreamReader.readLine();
+            if (line == null) { break; }
+            System.err.println(line);
+            throwError = true;
+        }
+
+        if (throwError) {
+            throw new RuntimeException("Pom [" + pomFilePath + "] could not be built");
         }
     }
 }

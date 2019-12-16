@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>build</artifactId>
-    <groupId>build</groupId>
+    <artifactId>temp-build-${module.name}</artifactId>
+    <groupId>cz.ouskam.opensource</groupId>
     <version>1</version>
     <packaging>pom</packaging>
 
@@ -22,11 +22,13 @@
                         </goals>
                         <configuration>
                             <artifactItems>
-                                #foreach( ${artifact} in ${artifacts} )
+                                #foreach( ${artifact} in ${module.artifacts} )
                                     <artifactItem>
                                         <groupId>${artifact.groupId}</groupId>
                                         <artifactId>${artifact.artifactId}</artifactId>
-                                        <version>${artifact.version}</version>
+                                        #if( ${artifact.version})<version>${artifact.version}</version>#else#end
+                                        #if( ${artifact.packaging})<type>${artifact.packaging}</type>#end
+                                        #if( ${artifact.classifier})<classifier>${artifact.classifier}</classifier>#end
                                         <outputDirectory>${modulePath}</outputDirectory>
                                     </artifactItem>
                                 #end

@@ -1,43 +1,16 @@
 package cz.ouskam.opensource.dto;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+@Data
 public class Module {
-    public String name;
-    public List<Artifact> artifacts = new ArrayList<>();
-    public List<Dependency> dependencies = new ArrayList<>();
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Artifact> getArtifacts() {
-        return artifacts;
-    }
-
-    public void setArtifacts(List<Artifact> artifacts) {
-        this.artifacts = artifacts;
-    }
-
-    public List<Dependency> getDependencies() {
-        return dependencies;
-    }
-
-    public void setDependencies(List<Dependency> dependencies) {
-        this.dependencies = dependencies;
-    }
-
-    @Override
-    public String toString() {
-        return "Module{" +
-                "name='" + name + '\'' +
-                ", artifacts=" + artifacts +
-                ", dependencies=" + dependencies +
-                '}';
-    }
+    private String name;
+    private String namespace;
+    private List<Artifact> artifacts;
+    private List<Dependency> dependencies;
+    private Map<String, String> properties;
 }

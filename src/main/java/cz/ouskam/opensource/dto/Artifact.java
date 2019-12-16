@@ -1,49 +1,15 @@
 package cz.ouskam.opensource.dto;
 
+import lombok.Data;
+
+import java.util.Map;
+
+@Data
 public class Artifact {
-    public String artifactId;
-    public String groupId;
-    public String version;
-    public String packaging;
-
-    public String getArtifactId() {
-        return artifactId;
-    }
-
-    public void setArtifactId(String artifactId) {
-        this.artifactId = artifactId;
-    }
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public String getPackaging() {
-        return packaging;
-    }
-
-    public void setPackaging(String packaging) {
-        this.packaging = packaging;
-    }
-
-    public String toString() {
-        return "Artifact{" +
-                "artifactId='" + artifactId + '\'' +
-                ", groupId='" + groupId + '\'' +
-                ", version='" + version + '\'' +
-                ", packaging='" + packaging + '\'' +
-                '}';
-    }
+    private String artifactId;
+    private String groupId;
+    private String version;
+    private String packaging;
+    private String classifier;
+    private Map<String, String> attributes;
 }
