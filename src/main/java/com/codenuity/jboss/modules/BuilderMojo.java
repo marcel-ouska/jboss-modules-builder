@@ -1,23 +1,18 @@
-package cz.ouskam.opensource;
+package com.codenuity.jboss.modules;
 
-import cz.ouskam.opensource.dto.Layer;
-import cz.ouskam.opensource.dto.Module;
-import cz.ouskam.opensource.dto.ModulesWrapper;
+import com.codenuity.jboss.modules.dto.Layer;
+import com.codenuity.jboss.modules.dto.Module;
+import com.codenuity.jboss.modules.dto.ModulesWrapper;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.velocity.VelocityContext;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.util.List;
 import java.util.Map;
-
-import static cz.ouskam.opensource.ModulesParser.parseModule;
 
 @Mojo( name = "build", defaultPhase = LifecyclePhase.GENERATE_RESOURCES )
 public class BuilderMojo extends AbstractMojo {
@@ -50,7 +45,7 @@ public class BuilderMojo extends AbstractMojo {
     }
 
     public void runtimeExecute() throws Exception {
-        ModulesWrapper wrapper = parseModule(modulesYamlFile, parameters);
+        ModulesWrapper wrapper = ModulesParser.parseModule(modulesYamlFile, parameters);
         Validator.validateData(wrapper);
         File modulesDirectory = new File(workDirectory.getAbsolutePath() + "/modules/");
         File layersDirectory = new File(modulesDirectory.getAbsolutePath() + "/system/layers/");

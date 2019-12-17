@@ -1,6 +1,6 @@
-package cz.ouskam.opensource;
+package com.codenuity.jboss.modules;
 
-import cz.ouskam.opensource.dto.ModulesWrapper;
+import com.codenuity.jboss.modules.dto.ModulesWrapper;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;

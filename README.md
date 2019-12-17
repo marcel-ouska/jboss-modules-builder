@@ -12,7 +12,7 @@ The plugin also downloads all necessary artifacts using maven.
     <build>
         <plugins>
             <plugin>
-                <groupId>cz.ouskam.opensource</groupId>
+                <groupId>com.codenuity.jboss</groupId>
                 <artifactId>jboss-modules-builder</artifactId>
                 <version>[current-version]</version>
                 <executions>
@@ -52,7 +52,7 @@ The plugin also downloads all necessary artifacts using maven.
     <build>
         <plugins>
             <plugin>
-                <groupId>cz.ouskam.opensource</groupId>
+                <groupId>com.codenuity.jboss</groupId>
                 <artifactId>jboss-modules-builder</artifactId>
                 <version>[current-version]</version>
                 <executions>

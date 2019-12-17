@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>temp-build-${module.name}</artifactId>
-    <groupId>cz.ouskam.opensource</groupId>
+    <groupId>com.codenuity.jboss</groupId>
     <version>1</version>
     <packaging>pom</packaging>
 

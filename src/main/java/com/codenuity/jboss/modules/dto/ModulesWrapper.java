@@ -1,4 +1,4 @@
-package cz.ouskam.opensource.dto;
+package com.codenuity.jboss.modules.dto;
 
 import lombok.Data;
 

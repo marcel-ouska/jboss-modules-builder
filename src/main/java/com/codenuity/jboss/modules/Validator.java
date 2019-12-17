@@ -1,6 +1,6 @@
-package cz.ouskam.opensource;
+package com.codenuity.jboss.modules;
 
-import cz.ouskam.opensource.dto.*;
+import com.codenuity.jboss.modules.dto.*;
 
 public class Validator {
 
