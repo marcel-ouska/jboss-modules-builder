@@ -35,17 +35,24 @@ public class BuilderMojo extends AbstractMojo {
     @Parameter(property = "parameters" )
     private Map<String, String> parameters;
 
+    private ModulesParser parser;
+
     @Override
     public void execute() {
         try {
+            init();
             runtimeExecute();
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
 
+    public void init() {
+        parser = new ModulesParser();
+    }
+
     public void runtimeExecute() throws Exception {
-        ModulesWrapper wrapper = ModulesParser.parseModule(modulesYamlFile, parameters);
+        ModulesWrapper wrapper = parser.parseModule(modulesYamlFile, parameters);
         Validator.validateData(wrapper);
         File modulesDirectory = new File(workDirectory.getAbsolutePath() + "/modules/");
         File layersDirectory = new File(modulesDirectory.getAbsolutePath() + "/system/layers/");
