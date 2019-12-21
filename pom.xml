@@ -6,7 +6,7 @@
   <groupId>com.codenuity.jboss</groupId>
   <artifactId>jboss-modules-builder</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.1</version>
 
   <name>Jboss Modules Builder</name>
   <description>Builder for jboss layers and modules</description>
