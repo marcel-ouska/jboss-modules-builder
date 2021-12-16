@@ -128,14 +128,15 @@ After build creates structure in your target/modules-build folder:
 
 ### Configuration
 
-| Property | Default Value | Mandatory | Description |
-|----------|---------------|-----------|-------------|
-| modulesYamlFile | - | :heavy_check_mark: | Path to yaml configuration file that describes how the modules should be built |
-| outputDirectory | ${project.build.directory}/modules-build | :x: | Output directory where the result will be stored |
-| workDirectory | ${project.build.directory}/work | :x: | Output directory where the temporary files will be stored |
+| Property | Default Value | Mandatory | Description                                                                          |
+|----------|---------------|-----------|--------------------------------------------------------------------------------------|
+| modulesYamlFile | - | :heavy_check_mark: | Path to yaml configuration file that describes how the modules should be built       |
+| outputDirectory | ${project.build.directory}/modules-build | :x: | Output directory where the result will be stored                                     |
+| workDirectory | ${project.build.directory}/work | :x: | Output directory where the temporary files will be stored                            |
 | mvnExecutable | [For windows - `mvn.cmd`, for others - `mvn`] | :x: | Path to maven executable in case there is no bindings to "mvn" or "mvn.cmd" commands |
-| generateLayersConf | true | :x: | If `layers.conf` will be generated |
-| parameters | - | :x: | A map of custom parameters that are later usable in the YAML file |
+| generateLayersConf | true | :x: | If `layers.conf` will be generated                                                   |
+| moduleDefaultNamespace | urn:jboss:module:1.5 | :x: | Set default namespace for all modules                                                |
+| parameters | - | :x: | A map of custom parameters that are later usable in the YAML file                    |
 
 ### Yaml structure
 

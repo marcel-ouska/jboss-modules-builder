@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -54,7 +55,7 @@ public class BuilderUtils {
             template = getPrettyXml(template, 2);
         }
 
-        writeToFile(template.getBytes("UTF-8"), outFile);
+        writeToFile(template.getBytes(StandardCharsets.UTF_8), outFile);
     }
 
     public static String getPrettyXml(String xmlData, int indent) throws Exception {

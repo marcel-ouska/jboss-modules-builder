@@ -10,7 +10,10 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.velocity.VelocityContext;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +38,9 @@ public class BuilderMojo extends AbstractMojo {
     @Parameter(property = "parameters" )
     private Map<String, String> parameters;
 
+    @Parameter( defaultValue = "urn:jboss:module:1.5", property = "moduleDefaultNamespace" )
+    private String moduleDefaultNamespace;
+
     private ModulesParser parser;
 
     @Override
@@ -52,6 +58,7 @@ public class BuilderMojo extends AbstractMojo {
     }
 
     public void runtimeExecute() throws Exception {
+        System.out.println("moduleDefaultNamespace" + moduleDefaultNamespace);
         ModulesWrapper wrapper = parser.parseModule(modulesYamlFile, parameters);
         Validator.validateData(wrapper);
         File modulesDirectory = new File(workDirectory.getAbsolutePath() + "/modules/");
@@ -64,6 +71,7 @@ public class BuilderMojo extends AbstractMojo {
 
                 context.put("modulePath", moduleDirPath);
                 context.put("module", module);
+                context.put("moduleDefaultNamespace", moduleDefaultNamespace);
 
                 String pomFilePath = workDirectory.getAbsolutePath() + "/pom-" + module.getName() + ".xml";
 

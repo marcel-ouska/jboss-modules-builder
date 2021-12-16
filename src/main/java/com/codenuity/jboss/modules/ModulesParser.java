@@ -8,7 +8,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 import java.util.stream.Collectors;
 
 public class ModulesParser {
@@ -20,14 +24,8 @@ public class ModulesParser {
             wrapper = yaml.loadAs(in, ModulesWrapper.class);
         }
 
-        Queue<InstanceFieldPair> fieldsToResolve = new LinkedList<>();
-        fieldsToResolve.addAll(
-                Arrays.asList(wrapper.getClass().getDeclaredFields())
-                        .stream()
-                        .map(obj -> new InstanceFieldPair(wrapper, obj))
-                        .collect(Collectors.toList())
-
-        );
+        Queue<InstanceFieldPair> fieldsToResolve = Arrays.stream(wrapper.getClass().getDeclaredFields())
+                .map(obj -> new InstanceFieldPair(wrapper, obj)).collect(Collectors.toCollection(LinkedList::new));
 
         while (!fieldsToResolve.isEmpty()) {
             InstanceFieldPair pair = fieldsToResolve.poll();
@@ -43,8 +41,7 @@ public class ModulesParser {
                 Collection collection = (Collection) value;
                 for (Object item: collection) {
                     fieldsToResolve.addAll(
-                            Arrays.asList(item.getClass().getDeclaredFields())
-                                    .stream()
+                            Arrays.stream(item.getClass().getDeclaredFields())
                                     .map(obj -> new InstanceFieldPair(item, obj))
                                     .collect(Collectors.toList())
                     );
@@ -56,7 +53,7 @@ public class ModulesParser {
     }
 
 
-    class InstanceFieldPair {
+    static class InstanceFieldPair {
         Object instance;
         Field field;
 
