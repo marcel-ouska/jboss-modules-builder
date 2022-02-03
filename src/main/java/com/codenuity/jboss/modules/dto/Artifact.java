@@ -11,5 +11,6 @@ public class Artifact {
     private String version;
     private String packaging;
     private String classifier;
+    private String destFileName;
     private Map<String, String> attributes;
 }
