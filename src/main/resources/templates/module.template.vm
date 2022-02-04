@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module name="${module.name}" #if( ${module.namespace})xmlns="${module.namespace}"#else xmlns="urn:jboss:module:1.5"#end>
+<module name="${module.name}" #if( ${module.namespace})xmlns="${module.namespace}"#{else}xmlns="${moduleDefaultNamespace}"#end>
 
     #if( ${module.properties})
         <properties>
@@ -12,7 +12,7 @@
     #if( ${module.artifacts})
         <resources>
         #foreach( ${artifact} in ${module.artifacts} )
-            <resource-root path="${artifact.artifactId}-${artifact.version}.#if( ${artifact.packaging})${artifact.packaging}#else jar#end"
+            <resource-root path="${artifact.artifactId}-${artifact.version}.#if( ${artifact.packaging})${artifact.packaging}#{else}jar#end"
                 #if( ${artifact.attributes})
                     #foreach( ${attribute} in ${artifact.attributes.entrySet()} )
                            ${attribute.key}="${attribute.value}"

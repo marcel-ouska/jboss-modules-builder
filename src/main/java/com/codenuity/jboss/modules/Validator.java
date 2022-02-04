@@ -1,6 +1,10 @@
 package com.codenuity.jboss.modules;
 
-import com.codenuity.jboss.modules.dto.*;
+import com.codenuity.jboss.modules.dto.Artifact;
+import com.codenuity.jboss.modules.dto.Dependency;
+import com.codenuity.jboss.modules.dto.Layer;
+import com.codenuity.jboss.modules.dto.Module;
+import com.codenuity.jboss.modules.dto.ModulesWrapper;
 
 public class Validator {
 
